@@ -10,6 +10,8 @@
 #include <sys/types.h>
 #include <limits.h>
 #include <regex.h>
+#include <readline/readline.h>
+#include <readline/history.h>
 //Function to make new folder. 
 void make_folder(const char *folder_name) {
     if (mkdir(folder_name, 0755) == -1) {
@@ -57,30 +59,35 @@ int execute_command(char *input) {
         }else{
             printf("Usage: list_dir <path>\n");
         }
+        return 1;
     }else if(strcmp(args[0], "print_basename") == 0){
         if(args[1] != NULL){
             print_basename(args[1]);
         }else{
             printf("There is no such function, maybe its 'print_basename'\n");
         }
+        return 1;
     }else if(strcmp(args[0], "list_matching_files") == 0){
         if( args[1] != NULL && args[2] != NULL){
             list_matching_files(args[1],args[2]);
         }else{
             printf("Usage: list_matching_files <dir_path> <pattern>\n");
         }
+        return 1;
     }else if(strcmp(args[0], "convert_to_long") == 0){
         if(args[1] != NULL){
             convert_to_long(args[1]);
         }else{
             printf("Usage: convert_to_long <string> \n");
         }
+        return 1;
     }else if(strcmp(args[0], "regex_match") == 0){
         if(args[1] != NULL && args[2] != NULL){
             regex_match(args[1], args[2]);
         }else{
             printf("Usage: regex_match <str> <patter>");
         }
+        return 1;
     }
 
     // External command execution
@@ -222,3 +229,25 @@ void regex_match(const char *str, const char *pattern) {
     // Free the compiled regex
     regfree(&regex);
 }
+
+char *command_generator(const char *text, int state){
+    static int list_index , len;
+
+    char *commands[]  = {"make_folder", "whoami", "list_file_info", "list_dir", "print_basename",
+    "list_matching_files", "convert_to_long", "regex_match"};
+
+    while(commands[list_index]){
+        if(strncmp(commands[list_index], text, len) == 0){
+            return strdup(commands[list_index++]);
+        }
+        list_index++;
+    }
+
+    return NULL;
+}
+
+char **custom_completion(const char * text, int start, int end){
+    rl_attempted_completion_over = 1;
+    return rl_completion_matches(text, command_generator);
+}
+

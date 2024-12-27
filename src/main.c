@@ -1,37 +1,40 @@
 #include "../includes/shell.h"
+#include <readline/readline.h>
+#include <readline/history.h>
+
 
 void display_prompt() {
     printf("custom_shell> ");
 }
 
 int main() {
-    char *input = NULL;  // Pointer to hold the input line
-    size_t len = 0;      // Size of the buffer (set dynamically by `getline`)
+    rl_attempted_completion_function = custom_completion; // Enable custom tab completion
+
+    char *input;
 
     while (1) {
-        printf("custom_shell> ");
+        input = readline("custom_shell> "); // Read user input with history and completion
 
-        // Use getline to read user input
-        ssize_t nread = getline(&input, &len, stdin);
-
-        // Check for EOF (Ctrl+D)
-        if (nread == -1) {
+        // Exit on EOF (Ctrl+D)
+        if (input == NULL) {
             printf("\nExiting custom shell...\n");
             break;
         }
 
-        // Remove the newline character, if present
-        input[strcspn(input, "\n")] = '\0';
-
-        // If input is not empty, execute the command
+        // Add to history if the input is not empty
         if (strlen(input) > 0) {
-            if (execute_command(input) == 0) {
-                break; // Exit if execute_command returns 0 (e.g., for "exit")
-            }
+            add_history(input);
         }
+
+        // Execute the command
+        if (execute_command(input) == 0) {
+            free(input); // Free memory before exiting
+            break;
+        }
+
+        free(input); // Free memory allocated by readline
     }
 
-    free(input); // Free dynamically allocated memory
     return 0;
 
 }

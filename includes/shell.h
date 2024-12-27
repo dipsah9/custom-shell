@@ -29,6 +29,9 @@ void print_basename(const char *path);
 void list_matching_files(const char *dir_path, const char *pattern);
 void convert_to_long(const char *str);
 void regex_match(const char *str, const char *pattern);
+char *command_generator (const char *text, int state);
+char **custom_completion(const char *text, int start, int end);
+
 
 
 #endif // SHELL_H

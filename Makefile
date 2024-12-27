@@ -1,5 +1,6 @@
 CC = gcc
 CFLAGS = -Wall -Iincludes
+LDFLAGS = -lreadline
 OBJDIR = obj
 SRCDIR = src
 
@@ -9,7 +10,8 @@ EXEC = custom_shell
 all: $(EXEC)
 
 $(EXEC): $(OBJS)
-	$(CC) $(CFLAGS) -o $@ $^
+	mkdir -p $(OBJDIR)
+	$(CC) $(CFLAGS) $(OBJS) -o $@ $(LDFLAGS)
 
 $(OBJDIR)/%.o: $(SRCDIR)/%.c
 	mkdir -p $(OBJDIR)
