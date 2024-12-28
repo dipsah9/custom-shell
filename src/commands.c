@@ -88,6 +88,13 @@ int execute_command(char *input) {
             printf("Usage: regex_match <str> <patter>");
         }
         return 1;
+    }else if(strcmp(args[0], "cd") == 0){
+        if(args[1] != NULL){
+            change_directory(args[1]);
+        }else{
+            change_directory(NULL);
+        }
+        return 1;
     }
 
     // External command execution
@@ -230,24 +237,93 @@ void regex_match(const char *str, const char *pattern) {
     regfree(&regex);
 }
 
-char *command_generator(const char *text, int state){
-    static int list_index , len;
+char *command_generator(const char *text, int state) {
+    static int list_index, len;
+    static char *commands[] = {"make_folder", "list_file_info", "list_dir", "print_basename", "regex_match", "list_matching_files","convert_to_long", "exit","change_directory", NULL};
 
-    char *commands[]  = {"make_folder", "whoami", "list_file_info", "list_dir", "print_basename",
-    "list_matching_files", "convert_to_long", "regex_match"};
+    if (!state) { // First call to generator
+        list_index = 0;
+        len = strlen(text);
+    }
 
-    while(commands[list_index]){
-        if(strncmp(commands[list_index], text, len) == 0){
-            return strdup(commands[list_index++]);
+    while (commands[list_index]) {
+        // Match the input text with available commands
+        if (strncmp(commands[list_index], text, len) == 0) {
+            return strdup(commands[list_index++]); // Duplicate and return matching command
         }
         list_index++;
     }
 
-    return NULL;
+    return NULL; // No more matches
 }
 
-char **custom_completion(const char * text, int start, int end){
-    rl_attempted_completion_over = 1;
-    return rl_completion_matches(text, command_generator);
+char **custom_completion(const char *text, int start, int end) {
+    // Check if we're completing a command or a file/directory
+    if (start == 0) {
+        // Command completion
+        rl_attempted_completion_over = 1; // Use custom completion
+        return rl_completion_matches(text, command_generator);
+    } else {
+        // File/Directory completion
+        return rl_completion_matches(text, filename_generator);
+    }
 }
 
+void change_directory(const char *path){
+    if (path == NULL) {
+        // Default to the user's home directory
+        path = getenv("HOME");
+        if (path == NULL) {
+            fprintf(stderr, "Error: HOME environment variable not set\n");
+            return;
+        }
+    }
+
+    if (chdir(path) == -1) {
+        perror("Error changing directory");
+    }
+}
+
+char *filename_generator(const char *text, int state) {
+    static DIR *dir = NULL;
+    static struct dirent *entry;
+    static int len;
+
+    if (!state) { // First call to generator
+        if (dir) {
+            closedir(dir); // Close previously opened directory
+        }
+        dir = opendir("."); // Open the current directory
+        len = strlen(text);
+    }
+
+    while (dir && (entry = readdir(dir)) != NULL) {
+        // Match input text with file/directory names
+        if (strncmp(entry->d_name, text, len) == 0) {
+            return strdup(entry->d_name); // Return matching file/directory name
+        }
+    }
+
+    if (dir) {
+        closedir(dir); // Close the directory
+        dir = NULL;
+    }
+
+    return NULL; // No more matches
+}
+
+
+void display_manual(const char *manual_path) {
+    FILE *file = fopen(manual_path, "r");
+    if (file == NULL) {
+        perror("Error opening manual file");
+        return;
+    }
+
+    char line[1024];
+    while (fgets(line, sizeof(line), file) != NULL) {
+        printf("%s", line);
+    }
+
+    fclose(file);
+}

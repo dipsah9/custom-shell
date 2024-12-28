@@ -4,12 +4,14 @@
 
 
 void display_prompt() {
-    printf("custom_shell> ");
+    printf("😍custom_shell> ");
 }
+
 
 int main() {
     rl_attempted_completion_function = custom_completion; // Enable custom tab completion
-
+    const char *manual_path = "manual.txt";
+    display_manual(manual_path);
     char *input;
 
     while (1) {

@@ -1,0 +1,214 @@
+Custom Shell User Manual
+========================
+
+Welcome to the Custom Shell! This shell provides a simple and user-friendly interface to interact with the operating system. 
+It supports both built-in commands and external programs.
+Below is a detailed guide to using the shell.
+
+---
+
+### **Getting Started**
+1. **Launch the Shell:**
+   To start the shell, run the following command:
+   ```bash
+   ./custom_shell
+   ```
+
+2. **Shell Prompt:**
+   The shell prompt displays the current working directory:
+   ```
+   /current/directory>
+   ```
+
+3. **Exiting the Shell:**
+   To exit the shell, use the `exit` command:
+   ```bash
+   custom_shell> exit
+   ```
+
+---
+
+### **Built-in Commands**
+
+#### **1. cd**
+- **Description:** Change the current working directory.
+- **Usage:**
+  ```bash
+  cd <directory>
+  ```
+- **Examples:**
+  ```bash
+  cd /tmp
+  cd ..          # Go to the parent directory
+  cd             # Go to the home directory
+  ```
+
+---
+
+#### **2. pwd**
+- **Description:** Print the current working directory.
+- **Usage:**
+  ```bash
+  pwd
+  ```
+- **Example:**
+  ```bash
+  custom_shell> pwd
+  /home/user
+  ```
+
+---
+
+#### **3. run_parallel**
+- **Description:** Run multiple commands concurrently using threads.
+- **Usage:**
+  ```bash
+  run_parallel <cmd1> <cmd2> ... <cmdN>
+  ```
+- **Example:**
+  ```bash
+  run_parallel "ls -l" "echo Hello" "sleep 2"
+  ```
+
+---
+
+#### **4. make_folder**
+- **Description:** Create a new folder with the specified name.
+- **Usage:**
+  ```bash
+  make_folder <folder_name>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> make_folder my_folder
+  ```
+
+---
+
+#### **5. list_info**
+- **Description:** Display detailed information about a specified file.
+- **Usage:**
+  ```bash
+  list_info <file>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> list_info example.txt
+  ```
+
+---
+
+#### **6. list_dir**
+- **Description:** List all files and directories in the specified directory.
+- **Usage:**
+  ```bash
+  list_dir <directory>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> list_dir /path/to/directory
+  ```
+
+---
+
+#### **7. print_basename**
+- **Description:** Print the basename of the specified file or directory path.
+- **Usage:**
+  ```bash
+  print_basename <path>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> print_basename /path/to/file.txt
+  file.txt
+  ```
+
+---
+
+#### **8. list_matching_files**
+- **Description:** List all files in the specified directory that match a given pattern.
+- **Usage:**
+  ```bash
+  list_matching_files <directory> <pattern>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> list_matching_files /path/to/dir "*.txt"
+  ```
+
+---
+
+#### **9. convert_to_long**
+- **Description:** Convert the given string to a long integer.
+- **Usage:**
+  ```bash
+  convert_to_long <string>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> convert_to_long 12345
+  Converted number: 12345
+  ```
+
+---
+
+#### **10. regex_match**
+- **Description:** Check if a string matches a specified regex pattern.
+- **Usage:**
+  ```bash
+  regex_match <string> <pattern>
+  ```
+- **Example:**
+  ```bash
+  custom_shell> regex_match hello "^h.*o$"
+  Match found for pattern '^h.*o$' in string 'hello'
+  ```
+
+---
+
+#### **11. man**
+- **Description:** Display the shell's user manual.
+- **Usage:**
+  ```bash
+  man
+  ```
+- **Example:**
+  ```bash
+  custom_shell> man
+  (Displays this user manual)
+  ```
+
+---
+
+### **Additional Features**
+
+#### **Tab Completion**
+- Press `Tab` to autocomplete commands or file paths.
+- Example:
+  ```bash
+  custom_shell> ma<Tab>
+  make_folder
+  ```
+
+#### **Command History Navigation**
+- Use the up (`↑`) and down (`↓`) arrow keys to navigate through previous commands.
+
+#### **Error Messages**
+- Descriptive error messages are displayed for invalid commands or system call failures using `perror`.
+
+---
+
+### **Exiting the Shell**
+- To exit the shell, use the `exit` command:
+  ```bash
+  custom_shell> exit
+  ```
+
+---
+
+### **Contact**
+For issues or suggestions, contact the developer team.
+
+Enjoy using the Custom Shell!
+============================
+

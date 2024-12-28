@@ -1,0 +1,146 @@
+Custom Shell Documentation
+==========================
+
+1. void display_prompt();
+   ----------------------
+   Description:
+     Displays the custom shell prompt, typically showing the current working directory.
+   Parameters:
+     None
+   Example Usage:
+     display_prompt();
+
+2. int execute_command(char *input);
+   ---------------------------------
+   Description:
+     Parses and executes the user-provided command. Handles both built-in and external commands.
+   Parameters:
+     input - A string containing the user command and arguments.
+   Example Usage:
+     execute_command("ls -l");
+
+3. void make_folder(const char *folder_name);
+   -----------------------------------------
+   Description:
+     Creates a folder with the specified name.
+   Parameters:
+     folder_name - The name of the folder to create.
+   Example Usage:
+     make_folder("my_folder");
+
+4. void whoami();
+   --------------
+   Description:
+     Prints the username of the current user.
+   Parameters:
+     None
+   Example Usage:
+     whoami();
+
+5. void list_file_info(const char *file);
+   --------------------------------------
+   Description:
+     Displays detailed information about a specified file (e.g., size, permissions).
+   Parameters:
+     file - The name or path of the file to inspect.
+   Example Usage:
+     list_file_info("example.txt");
+
+6. void list_dir(const char *dir_path);
+   ------------------------------------
+   Description:
+     Lists all files and directories in the specified directory.
+   Parameters:
+     dir_path - The path of the directory to list.
+   Example Usage:
+     list_dir("/path/to/directory");
+
+7. void print_basename(const char *path);
+   --------------------------------------
+   Description:
+     Prints the basename of the specified file or directory path.
+   Parameters:
+     path - The full path of the file or directory.
+   Example Usage:
+     print_basename("/path/to/file.txt");
+
+8. void list_matching_files(const char *dir_path, const char *pattern);
+   -------------------------------------------------------------------
+   Description:
+     Lists all files in the specified directory that match a given pattern.
+   Parameters:
+     dir_path - The directory to search.
+     pattern - The pattern to match (e.g., "*.txt").
+   Example Usage:
+     list_matching_files("/path/to/dir", "*.txt");
+
+9. void convert_to_long(const char *str);
+   --------------------------------------
+   Description:
+     Converts the given string to a long integer using `strtol`.
+   Parameters:
+     str - The string to convert.
+   Example Usage:
+     convert_to_long("12345");
+
+10. void regex_match(const char *str, const char *pattern);
+    ------------------------------------------------------
+    Description:
+      Matches the given string against a specified regex pattern.
+    Parameters:
+      str - The string to match.
+      pattern - The regex pattern.
+    Example Usage:
+      regex_match("hello", "^h.*o$");
+
+11. char *command_generator(const char *text, int state);
+    -----------------------------------------------------
+    Description:
+      Generates a matching command for tab completion based on user input.
+    Parameters:
+      text - The partial input entered by the user.
+      state - The state of the generator for iterating matches.
+    Example Usage:
+      command_generator("li", 0);
+
+12. char **custom_completion(const char *text, int start, int end);
+    --------------------------------------------------------------
+    Description:
+      Provides custom tab completion for shell commands and file paths.
+    Parameters:
+      text - The partial input entered by the user.
+      start - The starting position of the input for completion.
+      end - The ending position of the input for completion.
+    Example Usage:
+      custom_completion("ls /path", 3, 8);
+
+13. void change_directory(const char *path);
+    ----------------------------------------
+    Description:
+      Changes the current working directory to the specified path.
+    Parameters:
+      path - The target directory path.
+    Example Usage:
+      change_directory("/tmp");
+
+14. char *filename_generator(const char *text, int state);
+    ------------------------------------------------------
+    Description:
+      Generates matching file or directory names for tab completion.
+    Parameters:
+      text - The partial input entered by the user.
+      state - The state of the generator for iterating matches.
+    Example Usage:
+      filename_generator("fi", 0);
+
+15. void display_manual(const char *manual_path);
+    ---------------------------------------------
+    Description:
+      Displays the contents of the manual file.
+    Parameters:
+      manual_path - The path to the manual file.
+    Example Usage:
+      display_manual("manual.txt");
+
+==========================
+End of Documentation

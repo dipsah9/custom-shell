@@ -31,7 +31,8 @@ void convert_to_long(const char *str);
 void regex_match(const char *str, const char *pattern);
 char *command_generator (const char *text, int state);
 char **custom_completion(const char *text, int start, int end);
-
-
+void change_directory(const char *path);
+char *filename_generator(const char *text, int state);
+void display_manual(const char *manual_path);
 
 #endif // SHELL_H
